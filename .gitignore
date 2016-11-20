@@ -1,0 +1,10 @@
+*
+!.gitignore
+!Makefile
+!*.h
+!*.c
+!include/
+!obj/
+!src/
+!test/
+!LICENSE
