@@ -242,6 +242,8 @@ void test_dictionary(void) {
 	CU_ASSERT_PTR_NOT_NULL(add_entry(dict, valueString, strlen(valueString)+1, "valueString"));
 	CU_ASSERT_PTR_NOT_NULL(add_entry(dict, &valueDouble, sizeof(double), "valueDouble"));
 
+	CU_ASSERT_PTR_NOT_NULL(add_entry(dict, &valueDouble, sizeof(double), "valueDouble"));
+
 	CU_ASSERT_EQUAL(get_number_of_entries(dict), 4);
 
 	entry* e = get_entry(dict, "valueString");
