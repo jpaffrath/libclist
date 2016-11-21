@@ -268,6 +268,10 @@ void test_dictionary(void) {
 	CU_ASSERT_EQUAL(contains_key(dict_to_clone, "valueInt2"), 2);
 	CU_ASSERT_EQUAL(contains_key(dict_to_clone, "noKey"), -1);
 
+	element* keys = get_keys(dict_to_clone);
+	CU_ASSERT_STRING_EQUAL((char*)get_value_at_index(keys, 1), "valueInt1");
+	delete_list(&keys);
+
 	entry* clone = clone_dictionary(dict_to_clone, sizeof(int));
 	CU_ASSERT_PTR_NOT_NULL(clone);
 
