@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Libclist by jpaffrath</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Libclist</h1>
+        <h2>libclist is a shared/static library for the c programming language with list and dictionary implementations</h2>
+        <a href="https://github.com/jpaffrath/libclist" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>
+    <a href="https://github.com/jpaffrath/libclist">
+        <img src="https://img.shields.io/badge/memcheck-passed-orange.svg" alt="Memcheck Badge">
+    </a>
+    <a href="https://github.com/jpaffrath/libclist/tree/master/test">
+        <img src="https://img.shields.io/badge/test-passed-green.svg" alt="Test Badge">
+    </a>
+     <a href="https://github.com/jpaffrath/libclist/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License Badge">
+    </a>
+</p>
+
+<h1>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>libclist is a shared/static library for the c programming language with list and dictionary implementations.
+libclist is very fast, yet memory saving and customizable. It is able to store any kind of data you like!</p>
+
+<h2>
+<a id="compile" class="anchor" href="#compile" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Compile</h2>
+
+<p>Invoke <em>make</em> in the project root. This will build libclist as a shared (libclist.so) and as a static (libclist.a) library.</p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<p>Invoke <em>sudo make install</em> in the project root. This will install the required header files along with the library to /usr/local/.</p>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>The test/ directory contains unit tests build with CUnit.
+Invoke <em>make</em> in the test/ directory will build a test binary.
+To check code coverage with gcov, run <em>gcov_setup.sh</em>.</p>
+
+<h1>
+<a id="list-api" class="anchor" href="#list-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List API</h1>
+
+<p>Provides a generic interface for a very fast linked list data structure. libclist supports storing any kind of data.
+Just</p>
+
+<div class="highlight highlight-source-c"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>libclist/list.h<span class="pl-pds">&gt;</span></span></pre></div>
+
+<p>in your project and off you go!
+Want a simple example? Take this:</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">int</span> myVal = <span class="pl-c1">5</span>;
+
+<span class="pl-c">// creates a new list holding your integer variable</span>
+element* list = create_list(&amp;myVal, <span class="pl-k">sizeof</span>(<span class="pl-k">int</span>));
+
+<span class="pl-c">// adds an elements to your list</span>
+<span class="pl-en">add_element</span>(list, &amp;myVal, <span class="pl-k">sizeof</span>(<span class="pl-k">int</span>));
+
+<span class="pl-c">// gets an element. You have to cast the result</span>
+<span class="pl-k">int</span> result = *(<span class="pl-k">int</span>*)get_element_at_index(list, <span class="pl-c1">1</span>);</pre></div>
+
+<p>Apart from the generic list interface, libclist provides a data type specialized API</p>
+
+<div class="highlight highlight-source-c"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>libclist/list_int.h<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>libclist/list_char.h<span class="pl-pds">&gt;</span></span></pre></div>
+
+<p>so you can use easier functions:</p>
+
+<div class="highlight highlight-source-c"><pre>element* myIntegerList = create_int_list(<span class="pl-c1">100</span>);
+
+<span class="pl-en">printf</span>(<span class="pl-s"><span class="pl-pds">"</span>My list contains <span class="pl-c1">%d</span> at index <span class="pl-c1">%d</span>!<span class="pl-pds">"</span></span>, get_int_at_index(myIntegerList, <span class="pl-c1">0</span>), 0);</pre></div>
+
+<p>If you are done using your list, do not forget to delete it!</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-en">delete_list</span>(&amp;list);</pre></div>
+
+<h2>
+<a id="a-special-case-structs-with-pointers" class="anchor" href="#a-special-case-structs-with-pointers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A special case: structs with pointers!</h2>
+
+<p>If you want to store structs with allocated pointers, libclist provides specialized <em>create</em> and <em>delete</em> functions:</p>
+
+<div class="highlight highlight-source-c"><pre>test_struct myStruct;
+myStruct.str = (<span class="pl-k">char</span>*)malloc(<span class="pl-c1">100</span>);
+
+element* list = create_list_alloc(&amp;ptr, alloc_callback);
+<span class="pl-en">delete_list_alloc</span>(&amp;list, free_callback);</pre></div>
+
+<p>These functions are taking function pointers for allocating and freeing pointers in your struct.
+You just have to define these functions by yourself.
+See the following code for an easy example:</p>
+
+<div class="highlight highlight-source-c"><pre><span class="pl-k">static</span> <span class="pl-k">void</span>* <span class="pl-en">alloc_callback</span>(<span class="pl-k">const</span> <span class="pl-k">void</span>* e) {
+    test_struct* s = (test_struct*)e;
+    test_struct* copy = (test_struct*)<span class="pl-c1">malloc</span>(<span class="pl-k">sizeof</span>(test_struct));
+    new-&gt;str = (<span class="pl-k">char</span>*)<span class="pl-c1">malloc</span>(<span class="pl-c1">100</span>);
+    <span class="pl-c1">strcpy</span>(copy-&gt;str, s-&gt;str);
+    <span class="pl-k">return</span> copy;
+}
+
+<span class="pl-k">static</span> <span class="pl-k">void</span> <span class="pl-en">free_callback</span>(<span class="pl-k">const</span> <span class="pl-k">void</span>* e) {
+    test_struct* ptr = (test_struct*)e;
+    <span class="pl-c1">free</span>(ptr-&gt;str);
+}</pre></div>
+
+<p>List supports a lot of useful functions, just like removing or swapping elements, removing elements in a range, creating list from arrays or strings, or cloning lists. See list.h for all implemented functions.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jpaffrath/libclist/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jpaffrath/libclist/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jpaffrath/libclist"></a> is maintained by <a href="https://github.com/jpaffrath">jpaffrath</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
