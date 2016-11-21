@@ -210,6 +210,21 @@ void test_list(void) {
 
 	delete_list(&list_empty);
 	CU_ASSERT_PTR_NULL(list_empty);
+
+	int intValues[4] = {3, -75, 1, 88};
+
+	element* list_array = create_list_with_array(intValues, sizeof(int), 4);
+	CU_ASSERT_PTR_NOT_NULL(list_array);
+
+	CU_ASSERT_EQUAL(get_length_of_list(list_array), 4);
+
+	CU_ASSERT_EQUAL(*(int*)get_value_at_index(list_array, 0), 3);
+	CU_ASSERT_EQUAL(*(int*)get_value_at_index(list_array, 1), -75);
+	CU_ASSERT_EQUAL(*(int*)get_value_at_index(list_array, 2), 1);
+	CU_ASSERT_EQUAL(*(int*)get_value_at_index(list_array, 3), 88);
+
+	delete_list(&list_array);
+	CU_ASSERT_PTR_NULL(list_array);
 }
 
 void test_dictionary(void) {
