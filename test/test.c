@@ -14,6 +14,7 @@ void test_list(void);
 void test_dictionary(void);
 
 void test_int_list(void);
+void test_char_list(void);
 
 void test_list_performance(void);
 
@@ -29,6 +30,7 @@ int main(int argc, char* argv[]) {
 		{"test of list", test_list},
 		{"test of dictionary", test_dictionary},
 		{"test of int list", test_int_list},
+		{"test of char list", test_char_list},
 		CU_TEST_INFO_NULL,
 	};
 
@@ -315,4 +317,38 @@ void test_int_list(void) {
 
 	delete_list(&int_list);
 	CU_ASSERT_PTR_NULL(int_list);
+}
+
+void test_char_list(void) {
+	element* char_list = create_char_list('A');
+	CU_ASSERT_PTR_NOT_NULL(char_list);
+
+	CU_ASSERT_EQUAL(get_length_of_list(char_list), 1);
+
+	int i;
+	for (i = 0; i < 50; i++) {
+		CU_ASSERT_PTR_NOT_NULL(add_char_element(char_list, (char)i));
+	}
+
+	for (i = 1; i < 50; i++) {
+		CU_ASSERT_EQUAL(get_char_at_index(char_list, i), (char)(i - 1));
+	}
+
+	CU_ASSERT_EQUAL(get_length_of_list(char_list), 51);
+	CU_ASSERT_EQUAL(contains_char(char_list, 20), (char)21);
+
+	for (i = 0; i < get_length_of_list(char_list); i++) {
+		CU_ASSERT_PTR_NOT_NULL(set_char_at_index(char_list, 100, i));
+	}
+
+	for (i = 0; i < get_length_of_list(char_list); i++) {
+		CU_ASSERT_EQUAL(get_char_at_index(char_list, i), 100);
+	}
+
+	CU_ASSERT_PTR_NOT_NULL(add_char_element_at_index(char_list, 42, 30));
+	CU_ASSERT_EQUAL(get_char_at_index(char_list, 30), (char)42);
+	CU_ASSERT_EQUAL(get_length_of_list(char_list), 52);
+
+	delete_list(&char_list);
+	CU_ASSERT_PTR_NULL(char_list);
 }
