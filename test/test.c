@@ -251,6 +251,7 @@ void test_dictionary(void) {
 	CU_ASSERT_STRING_EQUAL(e->value, valueString);
 
 	CU_ASSERT_PTR_NOT_NULL(remove_entry(dict, "valueChar"));
+	CU_ASSERT_PTR_NOT_NULL(remove_entry(dict, "valueDouble"));
 
 	e = get_entry(dict, "valueString");
 	CU_ASSERT_PTR_NOT_NULL(e);
