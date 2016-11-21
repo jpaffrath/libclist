@@ -1,5 +1,6 @@
 #include <libclist/list.h>
 #include <libclist/dictionary.h>
+#include <libclist/list_int.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,6 +15,8 @@
 void test_list(void);
 void test_dictionary(void);
 
+void test_int_list(void);
+
 void test_list_performance(void);
 
 /* TEST MAIN */
@@ -27,6 +30,7 @@ int main(int argc, char* argv[]) {
 	CU_TestInfo tests[] = {
 		{"test of list", test_list},
 		{"test of dictionary", test_dictionary},
+		{"test of int list", test_int_list},
 		CU_TEST_INFO_NULL,
 	};
 
@@ -279,4 +283,38 @@ void test_list_performance(void) {
 	printf("Storing %d values has taken %f seconds\n", max, seconds);
 
 	delete_list(&list);
+}
+
+void test_int_list(void) {
+	element* int_list = create_int_list(2);
+	CU_ASSERT_PTR_NOT_NULL(int_list);
+
+	CU_ASSERT_EQUAL(get_length_of_list(int_list), 1);
+
+	int i;
+	for (i = 0; i < 50; i++) {
+		CU_ASSERT_PTR_NOT_NULL(add_int_element(int_list, i));
+	}
+
+	for (i = 1; i < 50; i++) {
+		CU_ASSERT_EQUAL(get_int_at_index(int_list, i), i - 1);
+	}
+
+	CU_ASSERT_EQUAL(get_length_of_list(int_list), 51);
+	CU_ASSERT_EQUAL(contains_int(int_list, 20), 21);
+
+	for (i = 0; i < get_length_of_list(int_list); i++) {
+		CU_ASSERT_PTR_NOT_NULL(set_int_at_index(int_list, 100, i));
+	}
+
+	for (i = 0; i < get_length_of_list(int_list); i++) {
+		CU_ASSERT_EQUAL(get_int_at_index(int_list, i), 100);
+	}
+
+	CU_ASSERT_PTR_NOT_NULL(add_int_element_at_index(int_list, 42, 30));
+	CU_ASSERT_EQUAL(get_int_at_index(int_list, 30), 42);
+	CU_ASSERT_EQUAL(get_length_of_list(int_list), 52);
+
+	delete_list(&int_list);
+	CU_ASSERT_PTR_NULL(int_list);
 }
