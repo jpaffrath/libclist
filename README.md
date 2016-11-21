@@ -24,7 +24,7 @@ Invoke *sudo make install* in the project root. This will install the required h
 
 ## Testing ##
 The test/ directory contains unit tests build with CUnit.
-Invoke *make* in the test/ directory will build a test binary. libclist and CUnit have to be installed first.
+Invoke *make* in the test/ directory will build a test binary. CUnit has to be installed first.
 
 # list #
 Provides an interface for a very fast linked list data structure. libclist supports storing any kind of data.
