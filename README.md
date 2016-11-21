@@ -26,6 +26,7 @@ Invoke *sudo make install* in the project root. This will install the required h
 ## Testing ##
 The test/ directory contains unit tests build with CUnit.
 Invoke *make* in the test/ directory will build a test binary.
+To check code coverage with gcov, run *gcov_setup.sh*.
 
 # List API #
 Provides a generic interface for a very fast linked list data structure. libclist supports storing any kind of data.
