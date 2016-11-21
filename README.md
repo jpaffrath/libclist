@@ -4,11 +4,11 @@
              alt="Memcheck Badge">
     </a>
     <a href="https://github.com/jpaffrath/libclist/tree/master/test">
-        <img src="https://img.shields.io/badge/test-passing-green.svg"
-             alt="Java Badge">
+        <img src="https://img.shields.io/badge/test-passed-green.svg"
+             alt="Test Badge">
     </a>
      <a href="https://github.com/jpaffrath/libclist/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-GPL--3.0-blue.svg"
+        <img src="https://img.shields.io/badge/license-MIT-blue.svg"
              alt="License Badge">
     </a>
 </p>
