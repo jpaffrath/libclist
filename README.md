@@ -15,6 +15,7 @@
 
 # Introduction #
 libclist is a shared/static library for the c programming language with list and dictionary implementations.
+libclist is very fast, yet memory saving and customizable. It is able to store any kind of data you like!
 
 ## Compile ##
 Invoke *make* in the project root. This will build libclist as a shared (libclist.so) and as a static (libclist.a) library.
@@ -24,51 +25,56 @@ Invoke *sudo make install* in the project root. This will install the required h
 
 ## Testing ##
 The test/ directory contains unit tests build with CUnit.
-Invoke *make* in the test/ directory will build a test binary. CUnit has to be installed first.
+Invoke *make* in the test/ directory will build a test binary.
 
-# list #
-Provides an interface for a very fast linked list data structure. libclist supports storing any kind of data.
+# List API #
+Provides a generic interface for a very fast linked list data structure. libclist supports storing any kind of data.
+Just
 ```c
 #include <libclist/list.h>
-
+```
+in your project and off you go!
+Want a simple example? Take this:
+```c
 int myVal = 5;
 
-// create a new list holding your variable
+// creates a new list holding your integer variable
 element* list = create_list(&myVal, sizeof(int));
 
-// add elements to your list
-int myVal2 = 10;
-add_element(list, &myVal2, sizeof(int));
-```
-List supports lists holding values of different types:
-```c
-int intVal = 5;
-char charVal = 'J';
-struct my_struct s;
+// adds an elements to your list
+add_element(list, &myVal, sizeof(int));
 
-element* list = create_list(&intVal, sizeof(int));
-add_element(list, &charVal, sizeof(char));
-add_element(list, &s, sizeof(struct my_struct));
+// gets an element. You have to cast the result
+int result = *(int*)get_element_at_index(list, 1);
 ```
-Get an element or the value of an element is easy:
+Apart from the generic list interface, libclist provides a data type specialized API
 ```c
-intVal = *(int*)get_value_at_index(list, 0);
-charVal = *(char*)get_value_at_index(list, 1);
+#include <libclist/list_int.h>
+#include <libclist/list_char.h>
+```
+so you can use easier functions:
+```c
+element* myIntegerList = create_int_list(100);
+
+printf("My list contains %d at index %d!", get_int_at_index(myIntegerList, 0), 0);
 ```
 If you are done using your list, do not forget to delete it!
 ```c
 delete_list(&list);
 ```
-If you want to store structs with allocated pointers, please use the _alloc_ functions provided:
+
+## A special case: structs with pointers! ##
+If you want to store structs with allocated pointers, libclist provides specialized _create_ and _delete_ functions:
 ```c
-test_struct ptr;
-ptr.str = (char*)malloc(100);
+test_struct myStruct;
+myStruct.str = (char*)malloc(100);
 
 element* list = create_list_alloc(&ptr, alloc_callback);
-[...]
 delete_list_alloc(&list, free_callback);
 ```
-These functions are taking function pointers for allocating and freeing pointers in your struct:
+These functions are taking function pointers for allocating and freeing pointers in your struct.
+You just have to define these functions by yourself.
+See the following code for an easy example:
 ```c
 static void* alloc_callback(const void* e) {
 	test_struct* s = (test_struct*)e;
@@ -83,4 +89,4 @@ static void free_callback(const void* e) {
 	free(ptr->str);
 }
 ```
-List supports a lot of useful list functions, just like removing or swapping elements, removing elements in a range, creating list from arrays or strings, or cloning lists. See list.h for all implemented functions.
+List supports a lot of useful functions, just like removing or swapping elements, removing elements in a range, creating list from arrays or strings, or cloning lists. See list.h for all implemented functions.
