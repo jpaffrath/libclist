@@ -14,10 +14,10 @@
 </p>
 
 # Introduction #
-libclist is a shared library for the c programming language with list and dictionary implementations.
+libclist is a shared/static library for the c programming language with list and dictionary implementations.
 
 ## Compile ##
-Invoke *make* in the project root. This will build libclist as a shared library (libclist.so).
+Invoke *make* in the project root. This will build libclist as a shared (libclist.so) and as a static (libclist.a) library.
 
 ## Install ##
 Invoke *sudo make install* in the project root. This will install the required header files along with the library to /usr/local/.
