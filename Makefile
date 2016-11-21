@@ -1,5 +1,5 @@
 SRC_FILES := $(wildcard src/*.c)
-OBJ_FILES := $(addprefix obj/,$(notdir $(SRC_FILES:.c=.o)))
+OBJ_FILES = $(SRC_FILES:%.c=%.o)
 LIB_FILES := libclist.so
 CC := gcc
 CC_FLAGS := -Wall -Wextra -Werror -Iinclude -fPIC -c -o
@@ -9,7 +9,7 @@ LD_FLAGS := -shared -Wl,-soname,libclist.so.1.0.0
 
 all: $(LIB_FILES)
 
-obj/%.o: src/%.c
+%.o: %.c
 	$(CC) $(CC_FLAGS) $@ $<
 
 libclist.so: $(OBJ_FILES)
