@@ -1,6 +1,4 @@
-#include <libclist/list.h>
-#include <libclist/dictionary.h>
-#include <libclist/list_int.h>
+#include <libclist/libclist.h>
 
 #include <stdlib.h>
 #include <stdio.h>
