@@ -22,12 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef LIBC_LIBCLIST
-#define LIBC_LIBCLIST
+#include <list_char.h>
 
-#include "list.h"
-#include "list_int.h"
-#include "list_char.h"
-#include "dictionary.h"
+element* create_char_list(char value) {
+	return create_list(&value, sizeof(char));
+}
 
-#endif
+element* add_char_element(element* list, char value) {
+	return add_element(list, &value, sizeof(char));
+}
+
+element* add_char_element_at_index(element* list, char value, int index) {
+	return add_element_at_index(list, &value, sizeof(char), index);
+}
+
+char get_char_at_index(element* list, int index) {
+	return *(char*)get_value_at_index(list, index);
+}
+
+element* set_char_at_index(element* list, char value, int index) {
+	return set_value_at_index(list, &value, sizeof(char), index);
+}
+
+int contains_char(element* list, char value) {
+	return contains_value(list, &value, sizeof(char));
+}
