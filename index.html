@@ -108,7 +108,7 @@ element* list = create_list(&amp;myVal, <span class="pl-k">sizeof</span>(<span c
 <div class="highlight highlight-source-c"><pre>test_struct myStruct;
 myStruct.str = (<span class="pl-k">char</span>*)malloc(<span class="pl-c1">100</span>);
 
-element* list = create_list_alloc(&amp;ptr, alloc_callback);
+element* list = create_list_alloc(&amp;myStruct, alloc_callback);
 <span class="pl-en">delete_list_alloc</span>(&amp;list, free_callback);</pre></div>
 
 <p>These functions are taking function pointers for allocating and freeing pointers in your struct.
@@ -118,7 +118,7 @@ See the following code for an easy example:</p>
 <div class="highlight highlight-source-c"><pre><span class="pl-k">static</span> <span class="pl-k">void</span>* <span class="pl-en">alloc_callback</span>(<span class="pl-k">const</span> <span class="pl-k">void</span>* e) {
     test_struct* s = (test_struct*)e;
     test_struct* copy = (test_struct*)<span class="pl-c1">malloc</span>(<span class="pl-k">sizeof</span>(test_struct));
-    new-&gt;str = (<span class="pl-k">char</span>*)<span class="pl-c1">malloc</span>(<span class="pl-c1">100</span>);
+    copy-&gt;str = (<span class="pl-k">char</span>*)<span class="pl-c1">malloc</span>(<span class="pl-c1">100</span>);
     <span class="pl-c1">strcpy</span>(copy-&gt;str, s-&gt;str);
     <span class="pl-k">return</span> copy;
 }
