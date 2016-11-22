@@ -52,6 +52,7 @@ Apart from the generic list interface, libclist provides a data type specialized
 ```c
 #include <libclist/list_int.h>
 #include <libclist/list_char.h>
+#include <libclist/list_double.h>
 ```
 so you can use easier functions:
 ```c
