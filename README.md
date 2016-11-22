@@ -70,7 +70,7 @@ If you want to store structs with allocated pointers, libclist provides speciali
 test_struct myStruct;
 myStruct.str = (char*)malloc(100);
 
-element* list = create_list_alloc(&ptr, alloc_callback);
+element* list = create_list_alloc(&myStruct, alloc_callback);
 delete_list_alloc(&list, free_callback);
 ```
 These functions are taking function pointers for allocating and freeing pointers in your struct.
@@ -80,7 +80,7 @@ See the following code for an easy example:
 static void* alloc_callback(const void* e) {
 	test_struct* s = (test_struct*)e;
 	test_struct* copy = (test_struct*)malloc(sizeof(test_struct));
-	new->str = (char*)malloc(100);
+	copy->str = (char*)malloc(100);
 	strcpy(copy->str, s->str);
 	return copy;
 }
