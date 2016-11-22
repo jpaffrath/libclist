@@ -15,6 +15,7 @@ void test_dictionary(void);
 
 void test_int_list(void);
 void test_char_list(void);
+void test_double_list(void);
 
 void test_list_performance(void);
 
@@ -31,6 +32,7 @@ int main(int argc, char* argv[]) {
 		{"test of dictionary", test_dictionary},
 		{"test of int list", test_int_list},
 		{"test of char list", test_char_list},
+		{"test of double list", test_double_list},
 		CU_TEST_INFO_NULL,
 	};
 
@@ -373,4 +375,38 @@ void test_char_list(void) {
 
 	delete_list(&char_list);
 	CU_ASSERT_PTR_NULL(char_list);
+}
+
+void test_double_list(void) {
+	element* double_list = create_double_list(344.92);
+	CU_ASSERT_PTR_NOT_NULL(double_list);
+
+	CU_ASSERT_EQUAL(get_length_of_list(double_list), 1);
+
+	int i;
+	for (i = 0; i < 50; i++) {
+		CU_ASSERT_PTR_NOT_NULL(add_double_element(double_list, (double)i));
+	}
+
+	for (i = 1; i < 50; i++) {
+		CU_ASSERT_EQUAL(get_double_at_index(double_list, i), (double)(i - 1));
+	}
+
+	CU_ASSERT_EQUAL(get_length_of_list(double_list), 51);
+	CU_ASSERT_EQUAL(contains_double(double_list, 20), (double)21);
+
+	for (i = 0; i < get_length_of_list(double_list); i++) {
+		CU_ASSERT_PTR_NOT_NULL(set_double_at_index(double_list, 100.0, i));
+	}
+
+	for (i = 0; i < get_length_of_list(double_list); i++) {
+		CU_ASSERT_EQUAL(get_double_at_index(double_list, i), 100.0);
+	}
+
+	CU_ASSERT_PTR_NOT_NULL(add_double_element_at_index(double_list, 42.0, 30));
+	CU_ASSERT_EQUAL(get_double_at_index(double_list, 30), 42.0);
+	CU_ASSERT_EQUAL(get_length_of_list(double_list), 52);
+
+	delete_list(&double_list);
+	CU_ASSERT_PTR_NULL(double_list);
 }
