@@ -22,13 +22,28 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef LIBC_LIBCLIST
-#define LIBC_LIBCLIST
+#include <list_double.h>
 
-#include "list.h"
-#include "list_int.h"
-#include "list_char.h"
-#include "list_double.h"
-#include "dictionary.h"
+element* create_double_list(double value) {
+	return create_list(&value, sizeof(double));
+}
 
-#endif
+element* add_double_element(element* list, double value) {
+	return add_element(list, &value, sizeof(double));
+}
+
+element* add_double_element_at_index(element* list, double value, int index) {
+	return add_element_at_index(list, &value, sizeof(double), index);
+}
+
+double get_double_at_index(element* list, int index) {
+	return *(double*)get_value_at_index(list, index);
+}
+
+element* set_double_at_index(element* list, double value, int index) {
+	return set_value_at_index(list, &value, sizeof(double), index);
+}
+
+int contains_double(element* list, double value) {
+	return contains_value(list, &value, sizeof(double));
+}
